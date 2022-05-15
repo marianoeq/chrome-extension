@@ -1,42 +1,52 @@
-let myLeads = [];
+let myInterest = [];
 
 let inputEl = document.querySelector("#input-el");
 let ulEl = document.querySelector("#ul-el");
 
-let inputBtn = document.querySelector("#input-btn");
-let deleteBtn = document.querySelector("#delete-btn");
+const inputBtn = document.querySelector("#input-btn");
+const deleteBtn = document.querySelector("#delete-btn");
+const tabBtn = document.querySelector("#tab-btn");
 
-const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+const InterestFromLocalStorage = JSON.parse(localStorage.getItem("myInterest"));
 
-if (leadsFromLocalStorage) {
-  myLeads = leadsFromLocalStorage;
-  renderLEads();
+if (InterestFromLocalStorage) {
+  myInterest = InterestFromLocalStorage;
+  render(myInterest);
 }
 
-inputBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  myLeads.push(inputEl.value);
-  inputEl.value = "";
-  localStorage.setItem("myLeads", JSON.stringify(myLeads));
-  ulEl.innerText = "";
-  renderLEads();
-});
-
-deleteBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  localStorage.clear();
-  myLeads = [];
-  ulEl.innerText = "";
-});
-
-function renderLEads() {
-  myLeads.map((lead) => {
+function render(interestingThings) {
+  interestingThings.map((myThings) => {
     let a = document.createElement("a");
     let li = document.createElement("li");
     ulEl.appendChild(li);
     li.appendChild(a);
     a.target = "_blank";
-    a.href = `${lead}`;
-    a.innerText = lead;
+    a.href = `${myThings}`;
+    a.innerText = myThings;
   });
 }
+inputBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  myInterest.push(inputEl.value);
+  inputEl.value = "";
+  localStorage.setItem("myInterest", JSON.stringify(myInterest));
+  ulEl.innerText = "";
+  render(myInterest);
+});
+
+tabBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  chrome.tab.query({ active: true, currentWindow: true }, () => {
+    myInterest.push(tab[0].url);
+    localStorage.setItem("myInterest", JSON.stringify(myInterest));
+    render(myInterest);
+  });
+});
+
+deleteBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  localStorage.clear();
+  myInterest = [];
+  ulEl.innerText = "";
+});
