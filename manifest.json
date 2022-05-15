@@ -4,7 +4,7 @@
     "name": "My Interesting things tracker",
     "action": {
         "default_popup": "index.html",
-        "default_icon": "idea-icon.png"
+        "default_icon": "ideas_icon.png"
     },
     "permissions": [
         "tabs"
