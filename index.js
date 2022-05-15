@@ -37,8 +37,8 @@ inputBtn.addEventListener("click", (e) => {
 tabBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
-  chrome.tab.query({ active: true, currentWindow: true }, () => {
-    myInterest.push(tab[0].url);
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    myInterest.push(tabs[0].url);
     localStorage.setItem("myInterest", JSON.stringify(myInterest));
     render(myInterest);
   });
