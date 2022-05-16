@@ -34,8 +34,8 @@ inputBtn.addEventListener("click", (e) => {
   render(myInterest);
 });
 
-tabBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+tabBtn.addEventListener("click", () => {
+
 
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     myInterest.push(tabs[0].url);
