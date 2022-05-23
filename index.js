@@ -35,8 +35,7 @@ inputBtn.addEventListener("click", (e) => {
 });
 
 tabBtn.addEventListener("click", () => {
-
-
+  ulEl.innerText = "";
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     myInterest.push(tabs[0].url);
     localStorage.setItem("myInterest", JSON.stringify(myInterest));
